@@ -1,49 +1,24 @@
 <template>
   <div id="app">
-    <transition name="fade">
-      <div id="loadingSec" v-if="load_show">
-        <div class="loadingLogo">
-          <img src="../src/assets/svg/home-loading.svg" alt="">
-          <span class="loadingBar" style="height: 0%;"></span>
-        </div>
-      </div>
-    </transition>
     <el-container>
       <el-header>
-        <b-navbar toggleable="lg" type="dark" variant="info">
-
-          <b-navbar-brand href="#">
-            <div class="logo">
-              <img src="../src/assets/svg/toplogo.svg" alt />
-            </div>
-          </b-navbar-brand>
-
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-          <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav>
-              <b-nav-item href="#">Link</b-nav-item>
-              <b-nav-item href="#" disabled>Disabled</b-nav-item>
-            </b-navbar-nav>
-
-            <b-navbar-nav class="ml-auto">
-              <b-nav-item-dropdown text="Lang" right>
-                <b-dropdown-item href="#">EN</b-dropdown-item>
-                <b-dropdown-item href="#">ES</b-dropdown-item>
-                <b-dropdown-item href="#">RU</b-dropdown-item>
-                <b-dropdown-item href="#">FA</b-dropdown-item>
-              </b-nav-item-dropdown>
-
-              <b-nav-item-dropdown right>
-                <template #button-content>
-                  <em>User</em>
-                </template>
-                <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-              </b-nav-item-dropdown>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-navbar>
+        <div class="logo">
+          <img src="./assets/img/toplogo.png" alt />
+        </div>
+        <el-menu
+          :default-active="defaultActive"
+          class="el-menu-demo"
+          mode="horizontal"
+          @select="handleSelect"
+          :router="router"
+        >
+          <el-menu-item index="/">首页</el-menu-item>
+          <el-menu-item index="/news">新闻资讯</el-menu-item>
+          <el-menu-item index="/product">产品中心</el-menu-item>
+          <el-menu-item index="/case">经典案例</el-menu-item>
+          <el-menu-item index="/goin">走进科建</el-menu-item>
+          <el-menu-item index="/download">下载APP</el-menu-item>
+        </el-menu>
       </el-header>
       <el-main>
         <router-view />
@@ -93,7 +68,6 @@ export default {
     return {
       router: true,
       defaultActive: "/",
-      load_show: true,
       isShow: false
     };
   },
@@ -102,12 +76,6 @@ export default {
       this.isShow = this.defaultActive != key;
       window.console.log(this.isShow);
     }
-  },
-  mounted() {
-    let _this = this;
-    setTimeout(function () {
-      _this.load_show = false;
-    }, 1000);
   }
 };
 </script>
@@ -117,7 +85,6 @@ export default {
   padding: 0;
   margin: 0;
 }
-
 html,
 body {
   height: 100%;
@@ -130,59 +97,23 @@ body {
   color: #2c3e50;
 }
 
-#loadingSec {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 9999;
-  background: #ee7800;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s
-}
-
-.fade-enter,
-.fade-leave-active {
-  opacity: 0
-}
-
 .el-header {
-  padding: 0 !important;
   display: flex;
   justify-content: space-between;
   align-content: center;
-  z-index: 99;
-  width: 100%;
+  width: 1240px;
   margin: 0 auto;
   //background-color: #fff;
 
-  nav {
-    width: 100%;
-  }
-
   .logo {
     width: 280px;
-
+    padding: 10px;
     img {
       width: 100%;
       line-height: 60px;
     }
   }
 }
-
 .el-main {
   padding: 0 !important;
 }
@@ -192,31 +123,26 @@ body {
   height: 216px;
   overflow: hidden;
   background-color: #14679f;
-
   &-content {
     width: 1240px;
     margin: 0 auto;
     padding-top: 20px;
     display: flex;
     justify-content: space-between;
-
     .content-nav {
       display: flex;
       justify-content: space-around;
-
       li {
         display: flex;
         flex-direction: column;
         padding: 0 20px;
         //justify-content: center;
         align-items: flex-start;
-
         p {
           font-size: 20px;
           color: #d4edff;
           padding: 10px 0;
         }
-
         span {
           color: #f7f7f7;
           font-weight: 300;
@@ -224,18 +150,15 @@ body {
         }
       }
     }
-
     img {
       width: 170px;
       height: 170px;
       padding: 10px;
     }
   }
-
   .copyright {
     height: 30px;
     background: #125688;
-
     span {
       color: #fff;
       line-height: 30px;
